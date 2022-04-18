@@ -5,6 +5,7 @@ import SignButtons from '../components/SignButtons';
 import SignForm from '../components/SignForm';
 import { singIn, signOut, singUp } from '../lib/auth'
 import {getUser} from '../lib/users'
+import {useUserContext} from '../contexts/UserContext'
 
 function SignInScreen({ navigation, route }) {
 
@@ -16,6 +17,7 @@ function SignInScreen({ navigation, route }) {
     })
 
     const [loading, setLoading] = useState();
+    const {setUser} = useUserContext();
 
     const createChangeTextHandler = (name) => (value) => {
         setForm({ ...form, [name]: value });
@@ -42,7 +44,7 @@ function SignInScreen({ navigation, route }) {
             if (!profile) {
                 navigation.navigate('Welcome', {uid : user.uid})
             } else {
-                //구현 예정
+                setUser(profile)
             }
             console.log(user);
         } catch (e) {
